@@ -12,5 +12,8 @@ router.get("/user-auth", requiredSignIn, (req, res) => {
 router.get("/admin-auth", requiredSignIn, isAdmin, (req, res) => {
     res.status(200).send({ ok: true });
 });
+
+//make an api of get all story of users if owner or contributor
+
 router.post('/forgot-password', forgotPasswordController)
 module.exports = router;

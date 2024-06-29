@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getAllStories, createStory, getStoryById, updateStory, deleteStory, addRating, addContributor, removeContributor } = require("../controller/storyController");
+const { getAllStories, createStory, getStoryById, updateStory, deleteStory, addRating, addContributor, removeContributor, checkOwner } = require("../controller/storyController");
 
 router.post('/', createStory);
 

@@ -127,5 +127,28 @@ const removeContributor = async (req, res) => {
     }
 };
 
+const checkOwner = async (req, res) => {
+    try {
+        const { storyId, userId } = req.body;
+        const currentUserId = req.user._id;
 
-module.exports = { addContributor, removeContributor, getAllStories, createStory, getStoryById, updateStory, deleteStory, addRating };
+        const story = await Story.findById(storyId);
+
+        if (!story) {
+            return res.status(404).json({ success: false, message: 'Story not found' });
+        }
+
+        if (story.owner.toString() !== currentUserId.toString()) {
+            return res.status(403).json({ success: false, message: 'You are not authorized to modify this story' });
+        }
+
+        res.status(200).json({ success: true, message: 'You are the owner of this story' });
+
+    } catch (error) {
+        console.error('Error checking owner:', error);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+
+module.exports = { checkOwner, addContributor, removeContributor, getAllStories, createStory, getStoryById, updateStory, deleteStory, addRating };
